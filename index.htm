@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Wallpaper_Api_</title>
+
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        header {
+            background-color: #8ab54e;
+            height: 100%;
+            width: 100%;
+            padding: 20px 30px;
+            color: #e4e8df;
+            text-align: center;
+            box-shadow: 0px 1px 5px 2px rgb(78, 77, 77);
+        }
+
+        nav {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        nav input {
+            width: 400px;
+            padding: 5px 10px;
+            border: 2px solid black;
+        }
+
+        button {
+            padding: 5px 20px;
+            background-color: #8ab54e;
+            color:#e4e8df; 
+            font-weight: bold; 
+        }
+
+        button:hover {
+            background-color: #5a6b43;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+        main img {
+            height: 300px;
+            width: 450px;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1> Wallpaper Collections </h1>
+    </header>
+    <nav>
+        <input type="text" required>
+        <button> Get_Wallpaper </button>
+    </nav>
+
+    <main>
+        
+    </main>
+
+
+    <script>
+
+        document.querySelector('button').addEventListener('click' , getPics) 
+
+        const API_KEY = "22230223-a62254479e0654ceb328476f9"
+        const base_URL = "https://pixabay.com/api/"
+
+        function getPics (e) {
+            e.preventDefault()
+
+            let search = document.querySelector('input').value
+
+            fetch(base_URL + "?key=" + API_KEY + "&q=" + search) 
+                .then (res => res.json())
+                .then (data => update(data))
+                .catch(error => console.log(error))
+
+        }
+
+        function update(data) {
+            document.querySelector('main').innerHTML = ""
+
+            data.hits.forEach(item => {
+                let img = document.createElement('img')
+                img.src = item.webformatURL
+
+                document.querySelector('main').appendChild(img)
+            })
+        }
+    </script>
+</body>
+</html>
